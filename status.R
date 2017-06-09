@@ -3,7 +3,7 @@ library(ggplot2)
 
 # Set source file directory
 
-df <- data.frame(read.csv("MDRCTNCOMP.csv", stringsAsFactors = F))
+df <- data.frame(read.csv("https://doomibox.github.io/MDN-CTN-compare/MDRCTNCOMP.csv", stringsAsFactors = F))
 
 df %>% filter(MDRFINAL == 'wen') %>% View()
 

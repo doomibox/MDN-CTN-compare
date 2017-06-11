@@ -13,6 +13,13 @@ fillbarchart <- function(df, xcol, fillcol, xlab, filllab) {
   return(p)
 }
 
+scatterplot <- function(df, xcol, ycol, xlab, ylab) {
+  p <- ggplot(data = df) +
+    geom_point(mapping = aes(x = df[,xcol], y = df[,ycol]), size = 10, alpha = 0.04, color = 'red') +
+    labs(x = xlab, y = ylab)
+  return(p)
+}
+
 df %>% filter(MDRFINAL == 'wen') %>% View()
 
 df %>% filter(MDRTN == '1') %>% View()
@@ -22,7 +29,7 @@ df %>% filter(CTNFINAL == 'aak') %>% group_by(CTNTN) %>% summarise(n = n()) %>% 
 
 #consonant compare
 df %>% filter(MDRCSNT == 'c') %>% group_by(CTNCSNT) %>% summarise(n = n()) %>% mutate(percentage = paste0(round(n / sum(n) * 100, 1),'%')) %>% View()
-fillbarchart(df, "MDRCSNT", "CTNCSNT", "MDR consonant", "CTN consonant")
+scatterplot(df, "MDRCSNT", "CTNCSNT", "MDR consonant", "CTN consonant")
 
 #tone compare
 fillbarchart(df, "MDRCSNT", "CTNTN", "MDR consonant", "CTN tone")
@@ -34,10 +41,15 @@ fillbarchart(df, "MDRCSNT", "MDRTN", "MDR consonant", "MDR tone")
 
 #vowel compare
 df %>% filter(grepl('oe',CTNFINAL)) %>% group_by(MDRFINAL) %>% summarise(n = n()) %>% mutate(percentage = paste0(round(n / sum(n) * 100, 1),'%')) %>% View()
+df %>% filter(grepl('eo',CTNFINAL)) %>% View()
+df %>% filter(grepl('eo',CTNFINAL)) %>% fillbarchart("MDRCSNT", "MDRFINAL", "MDR consonant", "MDR final")
 
+#CTN stop compare
 df %>% filter(CTNSTP != '/') %>% View()
+df %>% filter(CTNSTP == 'k') %>% fillbarchart("MDRCSNT", "MDRFINAL", "MDR consonant", "MDR final")
 df %>% filter(CTNSTP == 't') %>% View()
 
+#nasal compare
 df %>% filter(CTNNSL == 'n') %>% View()
 
 

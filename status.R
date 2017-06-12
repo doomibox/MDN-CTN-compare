@@ -52,6 +52,7 @@ df %>% filter(CTNSTP == 't') %>% View()
 #nasal compare
 df %>% filter(CTNNSL == 'n') %>% View()
 
-
+#pairs
+pairs(df, col=as.character(df$CTNTN))
 
 
